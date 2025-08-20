@@ -1,3 +1,11 @@
 print("hello, new user")
 name = input("tell me your name please: ")
-print("your name is: ",name)
+
+a = "darin"
+b = "larose"
+
+if name == a or name == b:
+ print("hello admin", name)
+else:
+ print("hello",name)
+ 
