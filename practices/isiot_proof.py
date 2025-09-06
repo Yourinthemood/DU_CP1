@@ -1,18 +1,17 @@
-name = input("whats ur full name lil bro:").strip().capitalize().replace("."," ")
-
-phone = input("whats ur phone number lil bro:").strip("-").replace("-"," ").replace("."," ")
-
-if len(phone)!= 10 or not phone.isdigit(10):
-print("invalid phone number, setting to default")
-    
-    
+# DU, Period 2, String Methods Assignment
 
 
-GPA = float(input("whats ur GPA lil bro: "))
+name = input("Enter your full name: ")
+phone = input("Enter your phone number: ")
+gpa = input("Enter your GPA: ")
 
-rounded_gpa = round(GPA, 1)
+formatted_name = name.title()
 
+formatted_phone = phone[:3] + " " + phone[3:6] + " " + phone[6:]
 
-print("hello", name)
-print("your phone number is", phone)
-print("your GPA is", rounded_gpa)
+formatted_gpa = round(float(gpa), 1)
+
+print("\nFormatted Information:")
+print("name:", formatted_name)
+print("phone:", formatted_phone)
+print("GPA:", formatted_gpa)
