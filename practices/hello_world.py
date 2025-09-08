@@ -10,8 +10,8 @@ else:
  print("hello",name)
 
 print("your family has been captured",name)
-name = input("if you want to see them again please enter your SSN or else: ")
-name = name
+input("if you want to see them again please enter your SSN or else: ")
+ 
 print("haha, real funny, thats not a real SSN",name)
 print("say good bye now")
 print("with a sudden scream, came a loud bang and scilence.")
