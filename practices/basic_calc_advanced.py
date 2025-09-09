@@ -3,6 +3,14 @@
 num_1 = float(input("Enter first number: "))
 num_2 = float(input("Enter second number: "))
 
+more_num = input("Do you want to enter more numbers? (yes/no): ").lower()
+while more_num == "yes":   
+    extra_num = float(input("Enter another number: "))
+    num_1 += extra_num  
+    num_2 += extra_num  
+    more_num = input("Do you want to enter more numbers? (yes/no): ").lower()
+
+
 add = num_1 + num_2
 sub = num_1 - num_2 
 mul = num_1 * num_2
