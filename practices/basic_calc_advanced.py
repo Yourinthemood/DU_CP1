@@ -61,7 +61,4 @@ while True:
         break
     else:
         print("Please answer with 'yes' or 'no'.")
-
-
-
- 
+        
