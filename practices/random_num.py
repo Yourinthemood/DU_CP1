@@ -6,13 +6,15 @@ captain_divide = 7
 first_mate_divide = 3
 
 crews_share = 1
+ 
 
-total_shares = captain_divide + first_mate_divide + (crews_share * (priates_count - 2))
-share_value = money / total_shares  
-captain_money = share_value * captain_divide
-first_mate_money = share_value * first_mate_divide
-crew_money = share_value * crews_share + 500 - 1000
-print("captain gets:", captain_money)
-print("first mate gets:", first_mate_money)
-print("each crew still needs:", crew_money)
+#crew members get the rest of the shares divided equaly
+rest = money - (money / (captain_divide + first_mate_divide + (crews_share * (priates_count - 2)))) * (captain_divide + first_mate_divide)
+crew_member_share = rest / (priates_count - 2)  
 
+
+
+# we need round it to the second pplace
+print("each crew member gets: ", round((crew_member_share - 500), 2)) 
+print("first mate gets: ", round(crew_member_share * first_mate_divide, 2))
+print("captain gets: ", round(crew_member_share * captain_divide, 2))
