@@ -1,23 +1,17 @@
-# DU 2nd 
+# FL class Shopping List Manager
 
-home = input("is your homerwork done (Y/N):" ).lower
- 
-if home == ("n"):
-    print("go do your homework")
-elif home == ("y") :
-    print("ok, then")
-    
-    chore = input("are your chores done? (Y/N):" ).lower
+#Put your shopping list variable here
+shopping_list = []
 
-if chore == ("n"):
-    print("go do your chores then you can go")
-elif chore == ("y"):
-    print("go have fun")
-else: print("put the dang input corectly")
-
-hello = "hello, world"
-
-
-
-
-
+while True:
+    action = input("What would you like to do? (add/view/exit) ")
+    if action == "add":
+        item = input("Enter the item you want to add: ")
+        shopping_list.append(item)
+        print(f"Added {item} to the shopping list.")
+    elif action == "view":
+        print("Shopping List:")
+        for item in shopping_list:
+            print(f"- {item}")
+    elif action == "exit":
+        break

@@ -1,26 +1,26 @@
-# DU, Period 2, user_signin.py
-
-<<<<<<< HEAD
-dxujjdiquahuydnbqsi randomdakjnadskpiqekjd random.randint 666 jhfdkjfjfkfhmvkncvakamavdljsn;kb"j41jrkdhuagdkfj5by"
-
-dijij4jtoithgggg
-ehdnbiiuyeuj fkmt
-
-mdjmsifkjdkjfpoiukeiue
-=======
-
-
-correct_username = "pro-gamer2"
-correct_password = "passwordisthehard"
-
-
-username = input("Enter your username: ")
-password = input("Enter your password: ")
-
-
-if username == correct_username and password == correct_password:
-    print("Welcome, " + correct_username )
-else:
-    print("incorrect password or username")
-    
->>>>>>> 7a0bec3246d4bbfbce0b0e549fd5b5488402631a
+import random
+def start_game():
+    print("Welcome to the Number Guessing Game!")
+    print("I'm thinking of a number between 1 and 100.")
+    number_to_guess = random.randint(1, 100)
+    max_attempts = 10
+    attempts = 0
+    game_over = False
+    while not game_over:
+        guess = int(input("Enter your guess: "))
+        #no int so i fixed it logic error
+        if attempts >= max_attempts:
+            print(f"Sorry, you've used all {max_attempts} attempts. The number was {number_to_guess}.")
+            game_over = True
+        if guess == number_to_guess:
+            print("Congratulations! You've guessed the number!")
+            game_over = True
+        elif guess > number_to_guess:
+            print("Too high! Try again.")
+        elif guess < number_to_guess:
+            print("Too low! Try again.") 
+        else:
+            print("Invalid input. Please enter a number between 1 and 100.") # no else runtime error 
+        continue
+    print("Game Over. Thanks for playing!")
+start_game()
