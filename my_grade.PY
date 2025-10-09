@@ -39,6 +39,6 @@ elif grade_percent >= 66:
     print("you have a D")
 elif grade_percent >= 64:
     print("you have a D-")
-elif grade_percent >= 59:
+elif grade_percent < 59:
     print("you have an F")
 else: print("put the dang input corectly next time")
