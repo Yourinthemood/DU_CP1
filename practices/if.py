@@ -1,4 +1,4 @@
-#password strength check
+#password strength check DU p2 larose
 
 
 #display greeting and show criteria required for said password
