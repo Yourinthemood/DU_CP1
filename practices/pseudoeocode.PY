@@ -39,3 +39,11 @@
 #  call the function to start the game
 #tic_tac_toe()
 
+#make the game 
+board = ['1','2','3','4','5','6','7','8','9']
+
+#vs computer or 2 player
+#ask user to input a number 1-9
+#computer randomly selects a number 1-9
+#ask user to input a number 1-9
+
