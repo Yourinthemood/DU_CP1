@@ -1,0 +1,120 @@
+
+# DU P2 Combat Game Assignment
+
+import random
+
+def user_turn():
+    print("1. Normal Attack")
+    print("2. Wild Attack")
+    print("3. Drink healing potion") 
+    print("4. Flee")
+    choice = input("Enter choice: ")
+    return choice
+
+def monster_turn():
+    attack = random.randint(1, 20)
+    if attack > 12:
+        damage = random.randint(1, 6) + 2
+        print(f"Monster hits for {damage} damage!")
+        return damage
+    else:
+        print("Monster misses!")
+        return 0
+
+def main():
+    print("Welcome to training!")
+    name = input("What is your name? ")
+    
+    print("1. Fighter")
+    print("2. Mage")
+    print("3. Rogue")
+    class_choice = input("Enter class: ")
+    
+    health = 30
+    defense = 14
+    
+    print(f"Health: {health}")
+    print(f"Defense: {defense}")
+    
+    monster_health = 40
+    
+    print("You are being attacked by a Dire Wolf!")
+    
+    first = random.randint(1, 2)
+    if first == 1:
+        print("You move first!")
+        user_first = True
+    else:
+        print("Monster moves first!")
+        user_first = False
+    
+    while health > 0 and monster_health > 0:
+        if user_first:
+            choice = user_turn()
+            
+            if choice == "1":
+                damage = random.randint(1, 8) + 4
+                monster_health -= damage
+                print(f"You hit! Monster has {monster_health} health")
+            elif choice == "2":
+                damage = (random.randint(1, 8) + 4) * 2
+                monster_health -= damage
+                health -= 5
+                print(f"Wild attack! Monster has {monster_health} health")
+                print(f"You take 5 damage")
+            elif choice == "3":
+                health += 9
+                print(f"You heal 9 health. Health: {health}")
+            elif choice == "4":
+                if random.randint(1, 2) == 1:
+                    print("You fled!")
+                    break
+                else:
+                    print("Failed to flee!")
+            
+            if monster_health <= 0:
+                print("You win!")
+                break
+                
+            monster_damage = monster_turn()
+            health -= monster_damage
+            
+            if health <= 0:
+                print("You died!")
+                break
+        else:
+            monster_damage = monster_turn()
+            health -= monster_damage
+            
+            if health <= 0:
+                print("You died!")
+                break
+                
+            choice = user_turn()
+            
+            if choice == "1":
+                damage = random.randint(1, 8) + 4
+                monster_health -= damage
+                print(f"You hit! Monster has {monster_health} health")
+            elif choice == "2":
+                damage = (random.randint(1, 8) + 4) * 2
+                monster_health -= damage
+                health -= 5
+                print(f"Wild attack! Monster has {monster_health} health")
+                print(f"You take 5 damage")
+            elif choice == "3":
+                health += 9
+                print(f"You heal 9 health. Health: {health}")
+            elif choice == "4":
+                if random.randint(1, 2) == 1:
+                    print("You fled!")
+                    break
+                else:
+                    print("Failed to flee!")
+            
+            if monster_health <= 0:
+                print("You win!")
+                break
+
+if __name__ == "__main__":
+    main()
