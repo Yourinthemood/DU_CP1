@@ -1,44 +1,63 @@
-grade_percent = int(input("whats ur percentage in your class?: "))
 
+# DU P2 turtle race gambling
 
-aGRADE = 95 >= grade_percent <= 100
-aMINUS = 90 >= grade_percent < 95  
-bPLUS = 89 >= grade_percent < 90
-bGRADE = 86 >= grade_percent < 89
-bMINUS = 84 >= grade_percent < 86
-cPLUS = 79 >= grade_percent < 84
-cGRADE = 76 >= grade_percent < 79
-cMINUS = 74 >= grade_percent < 76
-dPLUS = 69 >= grade_percent < 74
-dGRADE = 66 >= grade_percent < 69
-dMINUS = 64 >= grade_percent < 66
-fGRADE = 59 >= grade_percent < 64
+import turtle
+import random
 
+# make turtle screen
+screen = turtle.Screen()
+screen.setup(800, 600)
+screen.bgcolor("white")
 
-if grade_percent > 100: 
-    print("your lying brochacho")
-elif grade_percent >= 95:
-    print("you have an A")
-elif grade_percent >= 90:
-    print("you have an A-")
-elif grade_percent >= 89:
-    print("you have a B+")
-elif grade_percent >= 86:
-    print("you have a B")
-elif grade_percent >= 84:
-    print("you have a B-")
-elif grade_percent >= 79:
-    print("you have a C+")
-elif grade_percent >= 76:
-    print("you have a C")
-elif grade_percent >= 74:
-    print("you have a C-")
-elif grade_percent >= 69:
-    print("you have a D+") 
-elif grade_percent >= 66:
-    print("you have a D")
-elif grade_percent >= 64:
-    print("you have a D-")
-elif grade_percent >= 59:
-    print("you have an F")
-else: print("put the dang input corectly next time")
+# draw red finish line on right
+finish = turtle.Turtle()
+finish.speed(0)
+finish.penup()
+finish.goto(350, 300)
+finish.pendown()
+finish.pensize(5)
+finish.color("red")
+finish.right(90)
+finish.forward(600)
+
+# create list of five colors
+colors = ["red", "green", "blue", "orange", "purple"]
+# make empty list for turtles
+racers = []
+
+# for each of five turtles
+for i in range(5):
+    # create new turtle
+    t = turtle.Turtle()
+    # set shape to turtle
+    t.shape("turtle")
+    # set color from list
+    t.color(colors[i])
+    # lift pen up
+    t.penup()
+    # move to start position on left
+    t.goto(-370, -150 + i * 75)
+    # add to turtles list
+    racers.append(t)
+
+# define race function
+def run_race():
+    # loop forever until winner
+    while True:
+        for turtle in racers:
+            # move forward random number
+            move = random.randint(5, 25)
+            turtle.forward(move)
+            
+            # check if past finish line
+            if turtle.xcor() >= 350:
+                # if yes return that turtle
+                return turtle
+
+# call race function
+winner = run_race()
+
+# close window
+screen.bye()
+# print winner color
+print(f"The {winner.color()[0]} turtle won!")
