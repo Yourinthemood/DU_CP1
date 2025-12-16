@@ -1,4 +1,39 @@
 #DU P2 THE FINAL GAME (7 revisions) (3 bricks of code deleted because it didnt work) (aproximatley 13 hours of my time compiled into one decent text game) *pun intended
+#=============================================
+#BASIC TUTORIAL AND STUFF ABOUT THE CODE
+#---FIGHT THE KINGS AND GET CARDS AND USABLES THROUGHOUT YOUR JOURNEY
+
+#---YOU MUST HEAL EVERY TIME AFTER A BATTLE BEFORE YOU CAN ENTER A NEW FIGHT OR YOU'LL DIE EASILY
+
+#---YOU ARE SUPPOSED TO BE ABLE TO FIGHT AGAIN, IN ORDER  TO GAIN MORE CROWNS, HOWEVER, WITHOUT THE CARDS GIVEN FROM FIGHTING THE HIGHER TEIR ARENAS, IT WILL BE HARD TO DEFEAT THEM
+
+#---GOOD LUCK MRS.LAROSE!
+
+#=============================================
+              
+#             ╔══════════════════════════════════════════════════════════════╗
+#             ║                       .-""""""-.                             ║
+#             ║                      / \     /  \                            ║
+#             ║                     |  X     X  |                            ║
+#             ║                     |    /-\    |                            ║
+#             ║                     |    ____|  |                            ║
+#             ║                      \  /  |    /                             ║
+#             ║                       \   |   /                              ║
+#             ║                        \  |  /                               ║
+#             ║                         \ | /                                ║
+#             ║                          \|/                                 ║
+#             ║                          / \                                 ║
+#             ║                         /   \                                ║
+#             ║                        /     \                               ║
+#             ║                       /       \                              ║
+#             ║                      ╱         ╲                             ║
+#             ║                     ╱           ╲                            ║
+#             ║                    ╱             ╲                           ║
+#             ║                                                              ║
+#             ║              "I'M WATCHING YOU PLAY THIS GAME!"              ║
+#             ║                                                              ║
+#             ╚══════════════════════════════════════════════════════════════╝
+
 import random
 import time
 
@@ -51,78 +86,103 @@ locations = [
     "healing_pool"       # Healing location
 ]
 
-# Room connections (non-linear paths)
+# NEW: Arena tiers with same crown requirements
+# Tier 1: 0 crowns needed
+# Tier 2: 10 crowns needed  
+# Tier 3: 25 crowns needed
+# Tier 4: 35 crowns needed
+# Tier 5: 45 crowns needed
+# Tier 6: 60 crowns needed
+# Tier 7: 80 crowns needed (requires crown_key)
+# Final: 100 crowns needed
+
+# Room connections (NON-LINEAR - multiple options at each tier)
 room_connections = {
     "training_camp": ["goblin_stadium", "bone_pit", "healing_pool"],
+    
+    # Tier 1 arenas (0 crowns) - you can choose either path
     "goblin_stadium": ["training_camp", "barbarian_bowl", "spell_valley", "healing_pool"],
     "bone_pit": ["training_camp", "ice_peak_arena", "spell_valley", "healing_pool"],
-    "barbarian_bowl": ["goblin_stadium", "pekka_playhouse", "healing_pool"],
-    "spell_valley": ["goblin_stadium", "bone_pit", "legendary_arena", "healing_pool"],
-    "ice_peak_arena": ["bone_pit", "legendary_arena", "healing_pool"],
-    "pekka_playhouse": ["barbarian_bowl", "king_tower", "healing_pool"],
-    "legendary_arena": ["spell_valley", "ice_peak_arena", "king_tower", "healing_pool"],
+    
+    # Tier 2 arenas (10 crowns) - multiple options
+    "barbarian_bowl": ["goblin_stadium", "pekka_playhouse", "ice_peak_arena", "healing_pool"],
+    "spell_valley": ["goblin_stadium", "bone_pit", "pekka_playhouse", "legendary_arena", "healing_pool"],
+    "ice_peak_arena": ["bone_pit", "barbarian_bowl", "legendary_arena", "healing_pool"],
+    
+    # Tier 3 arenas (25 crowns) - interconnected
+    "pekka_playhouse": ["barbarian_bowl", "spell_valley", "legendary_arena", "king_tower", "healing_pool"],
+    "legendary_arena": ["spell_valley", "ice_peak_arena", "pekka_playhouse", "king_tower", "healing_pool"],
+    
+    # Final boss (requires 100 crowns AND crown_key)
     "king_tower": ["pekka_playhouse", "legendary_arena"],
+    
+    # Healing pool connects to everywhere except final boss
     "healing_pool": ["training_camp", "goblin_stadium", "bone_pit", "barbarian_bowl", 
                     "spell_valley", "ice_peak_arena", "pekka_playhouse", "legendary_arena"]
 }
 
-# Room descriptions and contents
+# Room descriptions and contents - SAME CROWN REQUIREMENTS FOR TIERS
 room_data = {
     "training_camp": {
         "description": "A training ground for new warriors. Practice dummies line the walls.",
         "items": ["elixir_vial", "strength_potion"],
         "enemy": None,
-        "crowns_needed": 0
+        "crowns_needed": 0,
+        "crowns_reward": 0
     },
+    # TIER 1 (0 crowns needed) - Choose your starting path
     "goblin_stadium": {
         "description": "The Goblin Stadium! Goblins cheer from the stands as their champion approaches.",
         "items": [],
         "enemy": "goblin_king",
-        "crowns_needed": 0,
+        "crowns_needed": 0,  # Same as bone_pit
         "crowns_reward": 10
     },
     "bone_pit": {
         "description": "A pit filled with bones. Skeletons rattle in the darkness.",
         "items": ["spell_scroll"],
         "enemy": "skeleton_king",
-        "crowns_needed": 10,
-        "crowns_reward": 15
+        "crowns_needed": 0,  # Same as goblin_stadium
+        "crowns_reward": 10
     },
+    # TIER 2 (10 crowns needed) - Multiple options after first arena
     "barbarian_bowl": {
         "description": "A massive bowl-shaped arena. Barbarians roar from every direction.",
         "items": ["shield"],
         "enemy": "barbarian_king",
-        "crowns_needed": 25,
-        "crowns_reward": 20
+        "crowns_needed": 10,  # Same as spell_valley and ice_peak_arena
+        "crowns_reward": 15
     },
     "spell_valley": {
         "description": "A valley shimmering with magical energy. Wizards practice their craft.",
         "items": [],
         "enemy": "wizard_king",
-        "crowns_needed": 35,
-        "crowns_reward": 25
+        "crowns_needed": 10,  # Same as barbarian_bowl and ice_peak_arena
+        "crowns_reward": 15
     },
     "ice_peak_arena": {
         "description": "An icy arena that chills to the bone. Ice spells freeze the air.",
         "items": ["elixir_vial"],
         "enemy": "ice_king",
-        "crowns_needed": 45,
-        "crowns_reward": 30
+        "crowns_needed": 10,  # Same as barbarian_bowl and spell_valley
+        "crowns_reward": 15
     },
+    # TIER 3 (25 crowns needed) - Multiple interconnected arenas
     "pekka_playhouse": {
         "description": "P.E.K.K.A's Playhouse! Massive armored warriors await challengers.",
         "items": ["strength_potion"],
         "enemy": "pekka_king",
-        "crowns_needed": 60,
-        "crowns_reward": 35
+        "crowns_needed": 25,  # Same as legendary_arena
+        "crowns_reward": 20
     },
     "legendary_arena": {
         "description": "The Legendary Arena! Only the strongest dare to enter.",
         "items": ["crown_key"],
         "enemy": "legendary_king",
-        "crowns_needed": 80,
-        "crowns_reward": 50
+        "crowns_needed": 25,  # Same as pekka_playhouse
+        "crowns_reward": 20
     },
+    # FINAL BOSS (100 crowns + crown_key needed)
     "king_tower": {
         "description": "The King's Tower! The final challenge awaits at the top.",
         "items": [],
@@ -139,20 +199,27 @@ room_data = {
     }
 }
 
-# Enemy data
+# Enemy data (balanced for each tier)
 enemies = {
+    # Tier 1 enemies
     "goblin_king": {"health": 80, "attack": 15, "defense": 5},
-    "skeleton_king": {"health": 100, "attack": 20, "defense": 8},
-    "barbarian_king": {"health": 120, "attack": 25, "defense": 12},
-    "wizard_king": {"health": 90, "attack": 30, "defense": 6},
-    "ice_king": {"health": 110, "attack": 22, "defense": 10},
-    "pekka_king": {"health": 150, "attack": 35, "defense": 20},
-    "legendary_king": {"health": 180, "attack": 40, "defense": 25},
+    "skeleton_king": {"health": 80, "attack": 16, "defense": 6},
+    
+    # Tier 2 enemies (slightly harder)
+    "barbarian_king": {"health": 100, "attack": 20, "defense": 8},
+    "wizard_king": {"health": 90, "attack": 22, "defense": 6},
+    "ice_king": {"health": 95, "attack": 18, "defense": 10},
+    
+    # Tier 3 enemies
+    "pekka_king": {"health": 120, "attack": 25, "defense": 15},
+    "legendary_king": {"health": 110, "attack": 28, "defense": 12},
+    
+    # Final boss
     "final_king": {"health": 250, "attack": 50, "defense": 30}
 }
 
 # ============================================
-# FUNCTIONS
+# FUNCTIONS (Mostly same as before)
 # ============================================
 
 def show_status():
@@ -169,6 +236,9 @@ def show_status():
         print("HEALING POOL AVAILABLE: Yes")
     else:
         print("HEALING POOL AVAILABLE: No (visit after battle)")
+    
+    # Show progression info
+    print(f"ARENAS DEFEATED: {len(player_stats['defeated_enemies'])}/8")
     print("="*50)
 
 def show_items():
@@ -293,23 +363,84 @@ def get_available_moves():
     
     for location in room_connections[current_loc]:
         crowns_needed = room_data[location]["crowns_needed"]
-        if player_stats["crowns"] >= crowns_needed:
-            available_moves.append(location)
-            
-            # Special indicator for Healing Pool
-            if location == "healing_pool":
-                if player_stats["just_finished_battle"]:
-                    print(f"{option_num}. Healing Pool (Restore Health) ✓")
-                else:
-                    print(f"{option_num}. Healing Pool (No battles fought)")
+        
+        # Special check for final boss
+        if location == "king_tower":
+            if player_stats["crowns"] >= crowns_needed and player_items["crown_key"]:
+                available_moves.append(location)
+                print(f"{option_num}. King's Tower (Final Boss) ✓")
+            elif player_stats["crowns"] >= crowns_needed and not player_items["crown_key"]:
+                print(f"{option_num}. King's Tower (Need Crown Key) - Locked")
             else:
-                print(f"{option_num}. {location.replace('_', ' ').title()} (needs {crowns_needed} crowns) ✓")
+                print(f"{option_num}. King's Tower (Need {crowns_needed} crowns) - Locked")
         else:
-            print(f"{option_num}. {location.replace('_', ' ').title()} (needs {crowns_needed} crowns) - Locked")
+            if player_stats["crowns"] >= crowns_needed:
+                available_moves.append(location)
+                
+                # Special indicator for Healing Pool
+                if location == "healing_pool":
+                    if player_stats["just_finished_battle"]:
+                        print(f"{option_num}. Healing Pool (Restore Health) ✓")
+                    else:
+                        print(f"{option_num}. Healing Pool")
+                else:
+                    # Show if enemy is already defeated
+                    enemy_name = room_data[location]["enemy"]
+                    if enemy_name and enemy_name in player_stats["defeated_enemies"]:
+                        print(f"{option_num}. {location.replace('_', ' ').title()} (Defeated) ✓")
+                    else:
+                        print(f"{option_num}. {location.replace('_', ' ').title()} ✓")
+            else:
+                print(f"{option_num}. {location.replace('_', ' ').title()} (Need {crowns_needed} crowns) - Locked")
         
         option_num += 1
     
     return available_moves
+
+def get_arena_tier(arena_name):
+    """Get the tier of an arena based on crown requirements"""
+    crowns_needed = room_data[arena_name]["crowns_needed"]
+    if crowns_needed == 0 and arena_name != "training_camp":
+        return "Tier 1"
+    elif crowns_needed == 10:
+        return "Tier 2"
+    elif crowns_needed == 25:
+        return "Tier 3"
+    elif crowns_needed == 100:
+        return "Final Boss"
+    else:
+        return "Special"
+
+def show_arena_progression():
+    """Show which arenas are available/defeated"""
+    print("\n" + "="*40)
+    print("ARENA PROGRESSION")
+    print("="*40)
+    
+    # Group arenas by tier
+    tiers = {
+        "Tier 1 (0 crowns)": ["goblin_stadium", "bone_pit"],
+        "Tier 2 (10 crowns)": ["barbarian_bowl", "spell_valley", "ice_peak_arena"],
+        "Tier 3 (25 crowns)": ["pekka_playhouse", "legendary_arena"],
+        "Final Boss (100 crowns + key)": ["king_tower"]
+    }
+    
+    for tier_name, arenas in tiers.items():
+        print(f"\n{tier_name}:")
+        for arena in arenas:
+            enemy_name = room_data[arena]["enemy"]
+            if enemy_name and enemy_name in player_stats["defeated_enemies"]:
+                status = "✓ DEFEATED"
+            elif player_stats["crowns"] >= room_data[arena]["crowns_needed"]:
+                if arena == "king_tower" and not player_items["crown_key"]:
+                    status = "🔒 NEEDS KEY"
+                else:
+                    status = "⚔️ AVAILABLE"
+            else:
+                crowns_needed = room_data[arena]["crowns_needed"]
+                status = f"🔒 NEEDS {crowns_needed} CROWNS"
+            
+            print(f"  - {arena.replace('_', ' ').title()}: {status}")
 
 def regular_combat(enemy_name):
     """Handle regular combat (non-boss)"""
@@ -320,6 +451,7 @@ def regular_combat(enemy_name):
     enemy = enemies[enemy_name]
     print(f"\n=== BATTLE START! ===")
     print(f"Enemy: {enemy_name.replace('_', ' ').title()}")
+    print(f"Tier: {get_arena_tier(player_stats['location'])}")
     
     enemy_health = enemy["health"]
     player_health = player_stats["health"]
@@ -614,11 +746,15 @@ def restart_game():
 def main():
     """Main game loop"""
     print("\n" + "="*50)
-    print("CLASH ROYALE ADVENTURE")
+    print("CLASH ROYALE STORY MODE")
     print("="*50)
-    print("Travel through arenas, defeat kings, and collect crowns!")
-    print("Find the Crown Key to challenge the Final King!")
-    print("Visit the Healing Pool after battles to restore health.")
+    print("Multiple arenas available at each tier!")
+    print("Choose your own path to the final boss!")
+    print("\nTIER SYSTEM:")
+    print("Tier 1: 0 crowns needed (choose starting path)")
+    print("Tier 2: 10 crowns needed (3 arenas available)")
+    print("Tier 3: 25 crowns needed (2 arenas available)")
+    print("Final: 100 crowns + Crown Key needed")
     print("="*50)
     
     game_active = True
@@ -696,17 +832,22 @@ def main():
             options.append("use")
             option_number += 1
         
-        # Option 5: Show status
+        # Option 5: Show arena progression
+        print(f"{option_number}. Show arena progression")
+        options.append("progression")
+        option_number += 1
+        
+        # Option 6: Show status
         print(f"{option_number}. Show detailed status")
         options.append("status")
         option_number += 1
         
-        # Option 6: Show items/cards
+        # Option 7: Show items/cards
         print(f"{option_number}. Show inventory and cards")
         options.append("inventory")
         option_number += 1
         
-        # Option 7: Quit
+        # Option 8: Quit
         print(f"{option_number}. Quit game")
         options.append("quit")
         
@@ -772,6 +913,10 @@ def main():
                 else:
                     print("\nNo items to use!")
                     
+            elif action == "progression":
+                show_arena_progression()
+                input("\nPress Enter to continue...")
+                    
             elif action == "status":
                 show_status()
                 input("\nPress Enter to continue...")
@@ -792,7 +937,7 @@ def main():
             print("\n" + "="*50)
             print("YOU HAVE COMPLETED THE GAME!")
             print(f"Total Crowns: {player_stats['crowns']}")
-            print(f"Arenas Conquered: {len(player_stats['defeated_enemies'])}")
+            print(f"Arenas Conquered: {len(player_stats['defeated_enemies'])}/8")
             print(f"Items Collected: {sum(player_items.values())}")
             print("="*50)
             
